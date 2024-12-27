@@ -49,6 +49,7 @@ Proyek ini menggunakan teknologi berikut:
    - **Lokasi**: `database/seeders/` dan `database/factories/`.
    - **Penggunaan**: Untuk menghasilkan data uji secara otomatis.
 
+---
 ## Fungsi-Fungsi di Controller
 
 Berikut adalah penjelasan fungsi utama di controller:
@@ -74,6 +75,7 @@ Berikut adalah penjelasan fungsi utama di controller:
 4. **DashboardController**:
    - `index()`: Menampilkan data ringkasan untuk pengguna di dashboard.
 
+---
 # Penjelasan Controller: AdvisoryController
 karena beberapa controller menggunakan teknologi yang sama, maka diambil contoh AdvisoryController untuk penjelasan.
 
@@ -246,7 +248,7 @@ new Chart(document.getElementById('casaChart'), {
     options: { responsive: true, maintainAspectRatio: true }
 });
 ```
-
+---
 ## Instalasi
 
 Ikuti langkah-langkah berikut untuk menjalankan proyek ini di lingkungan lokal Anda:
@@ -300,7 +302,7 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek ini di lingkungan lokal A
     ```
     http://localhost:8000
     ```
-
+--- 
 ## Struktur Direktori Penting
 
 - `app/` - Berisi logika aplikasi.
