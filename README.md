@@ -1,66 +1,141 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Xpora Laravel Project
 
-## About Laravel
+## Deskripsi Proyek
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Xpora adalah sebuah proyek berbasis Laravel yang dirancang untuk mengelola data pengguna dan memberikan fitur pelaporan berbasis web untuk ekspor. Proyek ini bertujuan untuk memberikan solusi yang efisien dan modern dengan menggunakan framework Laravel.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- CRUD
+- Import Data
+- Export to Excel
+- Export to PDF
+- Visualisasi map
 
-## Learning Laravel
+## Teknologi yang Digunakan
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Proyek ini menggunakan teknologi berikut:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. **Laravel**:
+   - **Lokasi**: Seluruh framework.
+   - **Penggunaan**: Digunakan untuk membangun back-end, routing, dan manajemen database.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. **MySQL**:
+   - **Lokasi**: File konfigurasi database di `.env`.
+   - **Penggunaan**: Sebagai basis data utama untuk menyimpan informasi pengguna, data laporan, dan lainnya.
 
-## Laravel Sponsors
+3. **Laravel Blade**:
+   - **Lokasi**: `resources/views/`.
+   - **Penggunaan**: Template engine untuk merender halaman HTML dengan data dinamis.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4. **Laravel Mix**:
+   - **Lokasi**: `webpack.mix.js`.
+   - **Penggunaan**: Untuk mengelola aset front-end seperti CSS dan JavaScript.
 
-### Premium Partners
+5. **Bootstrap**:
+   - **Lokasi**: Diimpor di file Blade atau di assets front-end.
+   - **Penggunaan**: Untuk mempercantik tampilan antarmuka pengguna.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+6. **JavaScript**:
+   - **Lokasi**: `resources/js/`.
+   - **Penggunaan**: Untuk fitur interaktif di sisi klien.
 
-## Contributing
+7. **CSS**:
+   - **Lokasi**: `resources/css/`.
+   - **Penggunaan**: Untuk styling halaman aplikasi.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+8. **Seeder dan Factory**:
+   - **Lokasi**: `database/seeders/` dan `database/factories/`.
+   - **Penggunaan**: Untuk menghasilkan data uji secara otomatis.
 
-## Code of Conduct
+## Fungsi-Fungsi di Controller
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Berikut adalah penjelasan fungsi utama di controller:
 
-## Security Vulnerabilities
+1. **UserController**:
+   - `index()`: Menampilkan daftar semua pengguna.
+   - `create()`: Menampilkan formulir untuk menambahkan pengguna baru.
+   - `store(Request $request)`: Memproses dan menyimpan data pengguna baru ke dalam database.
+   - `edit($id)`: Menampilkan formulir untuk mengedit data pengguna tertentu.
+   - `update(Request $request, $id)`: Memperbarui data pengguna berdasarkan input dari formulir.
+   - `destroy($id)`: Menghapus data pengguna tertentu dari database.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2. **ReportController**:
+   - `index()`: Menampilkan daftar laporan yang tersedia.
+   - `show($id)`: Menampilkan detail laporan tertentu.
+   - `generate(Request $request)`: Menghasilkan laporan baru berdasarkan data masukan pengguna.
 
-## License
+3. **AuthController**:
+   - `login(Request $request)`: Memverifikasi kredensial pengguna dan memberikan akses ke aplikasi.
+   - `logout()`: Mengakhiri sesi pengguna yang sedang aktif.
+   - `register(Request $request)`: Membuat akun baru untuk pengguna.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+4. **DashboardController**:
+   - `index()`: Menampilkan data ringkasan untuk pengguna di dashboard.
+
+## Instalasi
+
+Ikuti langkah-langkah berikut untuk menjalankan proyek ini di lingkungan lokal Anda:
+
+1. Clone repositori ini:
+   ```bash
+   git clone https://github.com/Danar1111/xpora.git
+   ```
+
+2. Masuk ke direktori proyek:
+   ```bash
+   cd xpora
+   ```
+
+3. Instal dependensi menggunakan Composer:
+   ```bash
+   composer install
+   ```
+
+4. Instal dependensi front-end (jika menggunakan Laravel Mix atau alat front-end lainnya):
+   ```bash
+   npm install
+   ```
+
+5. Salin file `.env.example` menjadi `.env` dan sesuaikan konfigurasi:
+   ```bash
+   cp .env.example .env
+   ```
+
+6. Generate kunci aplikasi:
+   ```bash
+   php artisan key:generate
+   ```
+
+7. Migrasi database:
+   ```bash
+   php artisan migrate
+   ```
+
+8. (Opsional) Seed database dengan data awal:
+   ```bash
+   php artisan db:seed
+   ```
+
+9. Jalankan server pengembangan:
+   ```bash
+   php artisan serve
+   ```
+
+10. Akses aplikasi di browser:
+    ```
+    http://localhost:8000
+    ```
+
+## Struktur Direktori Penting
+
+- `app/` - Berisi logika aplikasi.
+- `routes/` - Berisi definisi rute aplikasi.
+- `resources/` - Berisi file view, CSS, dan JavaScript.
+- `database/` - Berisi migrasi, seeder, dan file database.
+- `public/` - Berisi file yang diakses publik seperti index.php.
+
+---
+
+Terima kasih telah menggunakan proyek ini! Semoga bermanfaat.
