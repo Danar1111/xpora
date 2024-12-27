@@ -63,7 +63,7 @@
                             {{ __('Portofolio') }}
                         </x-nav-link>
                         <x-nav-link :href="route('dashumkm')" :active="request()->routeIs('dashumkm', 'umkm.profil')" class="dark:text-gray-400">
-                            {{ __('Database UMKM') }}
+                            {{ __('Database UKM') }}
                         </x-nav-link>
                         <x-nav-link :href="route('profilebuyer')" :active="request()->routeIs('profilebuyer', 'umkm.profil')" class="dark:text-gray-400">
                             {{ __('Profile Buyer') }}
