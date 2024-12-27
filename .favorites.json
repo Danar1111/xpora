@@ -1,0 +1,19 @@
+[
+    {
+        "type": "Group",
+        "name": "View",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "SGZnLvuz5hT7cJaE"
+    },
+    {
+        "type": "Directory",
+        "name": "d:\\Development\\Xpora-app\\resources\\views",
+        "parent_id": "SGZnLvuz5hT7cJaE",
+        "fsPath": "d:\\Development\\Xpora-app\\resources\\views",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "1XitoKnpCHYzGOT4"
+    }
+]
