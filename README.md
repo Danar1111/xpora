@@ -74,6 +74,179 @@ Berikut adalah penjelasan fungsi utama di controller:
 4. **DashboardController**:
    - `index()`: Menampilkan data ringkasan untuk pengguna di dashboard.
 
+# Penjelasan Controller: AdvisoryController
+karena beberapa controller menggunakan teknologi yang sama, maka diambil contoh AdvisoryController untuk penjelasan.
+
+## Deskripsi
+AdvisoryController bertanggung jawab untuk mengelola layanan advisory, termasuk membuat, mengedit, menghapus, dan menampilkan data advisory. Selain itu, controller ini menyediakan fitur ekspor data ke format Excel dan PDF, serta mengimpor data dari file Excel.
+
+## Fungsi Utama
+
+### **1. advisory()**
+- **Deskripsi**: Menampilkan daftar semua layanan advisory yang ada.
+- **Output**: View `dashboard.advisory` dengan data `advisory`.
+
+### **2. addadvisory()**
+- **Deskripsi**: Menampilkan formulir untuk menambahkan layanan advisory baru.
+- **Output**: View `advisory/daftar` dengan data `provinces` dan `regencies`.
+
+### **3. store(Request $request)**
+- **Deskripsi**: Menyimpan layanan advisory baru ke dalam database.
+- **Validasi Input**:
+  - `training_date`: Wajib, format tanggal.
+  - `proposal_no`: Wajib, string, maksimal 255 karakter.
+  - Dan atribut lainnya.
+- **Output**: Redirect ke `/dashboard/advisory` setelah data disimpan.
+
+### **4. destroy($id)**
+- **Deskripsi**: Menghapus layanan advisory tertentu berdasarkan `id`.
+- **Output**: Redirect ke `advisory` dengan pesan sukses.
+
+### **5. detail($id)**
+- **Deskripsi**: Menampilkan detail lengkap dari layanan advisory tertentu.
+- **Output**: View `advisory.detail` dengan data `advisory`.
+
+### **6. edit($id)**
+- **Deskripsi**: Menampilkan formulir untuk mengedit layanan advisory tertentu.
+- **Output**: View `advisory.edit` dengan data `advisory`, `provinces`, dan `regencies`.
+
+### **7. update(Request $request, $id)**
+- **Deskripsi**: Memperbarui layanan advisory di database berdasarkan input.
+- **Validasi Input**:
+  - Sama seperti fungsi `store`.
+- **Output**: View `advisory.detail` dengan data yang telah diperbarui.
+
+### **8. export_excel()**
+- **Deskripsi**: Mengekspor semua data advisory ke file Excel.
+- **Output**: File `Advisory.xlsx` yang dapat diunduh.
+
+### **9. importdata()**
+- **Deskripsi**: Menampilkan halaman untuk mengimpor data advisory.
+- **Output**: View `advisory.import`.
+
+### **10. import_proses(Request $request)**
+- **Deskripsi**: Memproses dan menyimpan data advisory dari file Excel yang diunggah.
+- **Output**: Redirect ke `/dashboard/advisory` setelah data diimpor.
+
+### **11. exportPDF()**
+- **Deskripsi**: Mengekspor semua data advisory ke file PDF.
+- **Output**: File PDF `advisory_report.pdf` yang ditampilkan di browser.
+
+## Alur Data
+- **View yang Digunakan**:
+  - `dashboard.advisory`: Menampilkan daftar advisory.
+  - `advisory/daftar`: Formulir tambah advisory.
+  - `advisory.detail`: Menampilkan detail advisory.
+  - `advisory.edit`: Formulir edit advisory.
+  - `advisory.import`: Halaman impor advisory.
+  - `advisory.export_pdf`: Template untuk PDF.
+
+- **Model yang Digunakan**:
+  - `Advisory`: Untuk mengelola data advisory.
+  - `Province`: Untuk daftar provinsi.
+  - `Regency`: Untuk daftar kabupaten/kota.
+
+- **Ekspor dan Impor**:
+  - **Excel**: Menggunakan `Maatwebsite\Excel`.
+  - **PDF**: Menggunakan `Barryvdh\DomPDF`.
+
+## Dependencies
+- `Maatwebsite\Excel`: Untuk ekspor dan impor file Excel.
+- `Barryvdh\DomPDF`: Untuk menghasilkan file PDF.
+
+---
+
+## Teknologi Visualisasi
+
+### **1. Visualisasi Peta (Map)**
+Proyek ini menggunakan **Leaflet.js** untuk menampilkan peta interaktif yang memvisualisasikan data geospasial.
+
+- **Library**: 
+  - [Leaflet.js](https://leafletjs.com/)
+  - Data GeoJSON diambil dari `public/geojson/id.json`.
+
+- **Fitur yang Digunakan**:
+  - **Pusat Peta**: Peta berpusat di koordinat `[-2.5489, 118.0149]` dengan zoom level `6`.
+  - **Penyesuaian Wilayah**: Wilayah pada peta diberikan warna berdasarkan kategori (misalnya, Sumatera, Jawa, Papua).
+  - **Tooltip Interaktif**: Setiap wilayah menampilkan tooltip berisi jumlah debitur dan nilai total.
+
+- **Implementasi Utama**:
+```javascript
+const map = L.map('map', {
+    center: [-2.5489, 118.0149],
+    zoom: 6,
+    dragging: false,
+    scrollWheelZoom: false,
+    doubleClickZoom: false,
+    boxZoom: false,
+    keyboard: false,
+    zoomControl: false,
+    attributionControl: false
+});
+
+fetch('/geojson/id.json')
+    .then(response => response.json())
+    .then(data => {
+        L.geoJSON(data, {
+            style: function(feature) {
+                // Styling wilayah berdasarkan properti GeoJSON
+                return { fillColor: '#00b0f0', fillOpacity: 1, weight: 1 };
+            },
+            onEachFeature: function(feature, layer) {
+                // Menambahkan tooltip ke setiap wilayah
+                layer.bindTooltip(`Wilayah: ${feature.properties.name}`, { permanent: true });
+            }
+        }).addTo(map);
+    });
+```
+
+### **2. Visualisasi Grafik (Chart.js)**
+File menggunakan **Chart.js** untuk menampilkan grafik batang (bar chart) dan garis (line chart) secara dinamis.
+
+- **Library**:
+  - [Chart.js](https://www.chartjs.org/)
+  
+- **Fitur Grafik**:
+  - **Grafik BD Kredit dan CASA**:
+    - Menampilkan data pertumbuhan kredit ekspor (`BD Kredit`) dan total saldo kas (`CASA`).
+    - Data dinamis diambil dari JavaScript.
+  - **Opsi Grafik**:
+    - Responsif dengan pengaturan rasio aspek.
+
+#### **Implementasi Utama**
+```javascript
+const chartData = {
+    bdKredit: {
+        labels: ['Dec 21', 'Jun 22', 'Dec 22', 'Sep 23'],
+        datasets: [{
+            label: 'BD Kredit',
+            data: [18.1, 22.0, 26.7, 32.3],
+            backgroundColor: ['#4472c4', '#8fd6cb', '#8fd6cb', '#4472c4']
+        }]
+    },
+    casa: {
+        labels: ['Dec 21', 'Jun 22', 'Dec 22', 'Sep 23'],
+        datasets: [{
+            label: 'CASA',
+            data: [3.0, 3.9, 4.1, 4.4],
+            backgroundColor: ['#4472c4', '#8fd6cb', '#8fd6cb', '#4472c4']
+        }]
+    }
+};
+
+new Chart(document.getElementById('bdKreditChart'), {
+    type: 'bar',
+    data: chartData.bdKredit,
+    options: { responsive: true, maintainAspectRatio: true }
+});
+
+new Chart(document.getElementById('casaChart'), {
+    type: 'bar',
+    data: chartData.casa,
+    options: { responsive: true, maintainAspectRatio: true }
+});
+```
+
 ## Instalasi
 
 Ikuti langkah-langkah berikut untuk menjalankan proyek ini di lingkungan lokal Anda:
